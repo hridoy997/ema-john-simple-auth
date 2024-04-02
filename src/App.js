@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, Route, RouterProvider, Routes } from 'react-router-dom';
 import './App.css';
 import About from './components/About/About';
 import Main from './layouts/Main';
@@ -6,6 +6,7 @@ import Shop from './components/Shop/Shop';
 import Orders from './components/Orders/Orders';
 import Inventory from './components/Inventory/Inventory';
 import { productsAndCartLoader } from './loaders/productsAndCartLoader';
+import Login from './components/Login/Login';
 
 
 function App() {
@@ -31,6 +32,10 @@ function App() {
         {
           path:'about',
           element:<About></About>
+        },
+        {
+          path:'login',
+          element:<Login></Login>
         }
       ]
     },
