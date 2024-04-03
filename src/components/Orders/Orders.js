@@ -1,40 +1,40 @@
-import React, { useState } from 'react';
-import { Link, useLoaderData } from 'react-router-dom';
-import { deleteShoppingCart, removeFromDb } from '../../utilities/fakedb';
+import React from 'react';
+import './Orders.css';
+import useProducts from '../../Hooks/useProducts';
+import useCart from '../../Hooks/useCart';
 import Cart from '../Cart/Cart';
 import ReviewItem from '../ReviewItem/ReviewItem';
+import { removeFromDb } from '../../utilities/fakedb';
+import { Link } from 'react-router-dom';
 
 const Orders = () => {
-    const { initialCart } = useLoaderData();  // { products: products, initialCart: initialCart }
-    const [cart, setCart] = useState(initialCart)
+    const [products, setProducts] = useProducts();
+    const [cart, setCart] = useCart(products);
 
-    const handleRemoveItem = (id) => {
-        const remaining = cart.filter(product => product.id !== id);
-        setCart(remaining);
-        removeFromDb(id);
-    }
-
-    const clearCart = () =>{
-        setCart([]);
-        deleteShoppingCart();
+    const handelRemoveProduct = (product) => {
+        const rest = cart.filter(pd => pd.id !== product.id);
+        setCart(rest);
+        removeFromDb(product.id);
     }
 
     return (
         <div className='shop-container'>
-            <div className='orders-container'>
+            <div className="review-item-container">
                 {
                     cart.map(product => <ReviewItem
-                        key={product.id}
-                        product={product}
-                        handleRemoveItem={handleRemoveItem}
-                    ></ReviewItem>)
-                }
-                {
-                    cart.length === 0 && <h2>No Items for Review. Please <Link to="/">Shop more</Link></h2>
+                    key={product.id}
+                    product = {product}
+                    handelRemoveProduct = {handelRemoveProduct}
+                    >
+                    </ReviewItem>)
                 }
             </div>
-            <div className='cart-container'>
-                <Cart clearCart={clearCart} cart={cart}></Cart>
+            <div className="cart-container">
+                <Cart cart = {cart}>
+                    <Link to='/shipment'>
+                        <button>Proceed Checkout</button>
+                    </Link>
+                </Cart>
             </div>
         </div>
     );

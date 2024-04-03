@@ -1,0 +1,7 @@
+.not-found {
+    text-align: center;
+}
+.not-found span{
+    border-right: 2px solid black;
+}
+
